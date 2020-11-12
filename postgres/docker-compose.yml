@@ -1,0 +1,19 @@
+version: '3'
+services:
+  db:
+    build:
+      context: ./container
+    restart: always
+    environment:
+      POSTGRES_DB: 'personal'
+      POSTGRES_USER: 'admin'
+      POSTGRES_PASSWORD: 'Password01'
+    ports: 
+      - "5442:5432"
+    volumes:
+      - ./postgres-store:/var/lib/postgresql/data
+      - ./postgres-data:/home
+
+volumes:
+  postgres-store:
+  postgres-data:
