@@ -1,9 +1,9 @@
-version: "3.2"
+version: "3.9"
 services:
 
  redis:
     image: "redis:buster"
-
+    container_name: "redisdb"
     command: redis-server --requirepass SUPERduperGIGA42
 
     ports:
