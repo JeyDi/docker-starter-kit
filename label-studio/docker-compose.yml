@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  label_studio:
+    image: heartexlabs/label-studio:latest
+    container_name: label_studio
+    ports:
+      - 8508:8080
+    volumes:
+      - ./mydata:/label-studio/data
+
+volumes:
+  mydata:
