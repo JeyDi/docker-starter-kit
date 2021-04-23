@@ -4,10 +4,11 @@
 
 # Hint: Search '>' for the macro rules
 
-######################
+########################
 #### > CUSTOM RULES ####
-######################
+########################
 
+#Add here your custom rules for the project
 
 ###################
 #### > NODE JS ####
@@ -1263,6 +1264,9 @@ docs/_build/
 # PyBuilder
 .pybuilder/
 target/
+
+# Poetry
+poetry.lock
 
 # Jupyter Notebook
 .ipynb_checkpoints
