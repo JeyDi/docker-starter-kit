@@ -1,15 +1,15 @@
-# Files
-import json
-import importlib
-import datetime as dt
-import logging
 import os
+import logging
 import yaml
 import re
+import json
+import datetime as dt
+import importlib
 
+import unidecode
 import numpy as np
 import pandas as pd
-import unidecode
+
 
 # Conversions
 def underscore_to_camelcase(text):
@@ -21,7 +21,11 @@ def millis2date(ms):
 
 
 def date2millis(x, format="%Y-%m-%d %H:%M:%S"):
-    return dt.datetime.strptime(x, format).timestamp() * 1000 if pd.notnull(x) else None
+    return (
+        dt.datetime.strptime(x, format).timestamp() * 1000
+        if pd.notnull(x)
+        else None
+    )
 
 
 def parse_date(x, format="%Y-%m-%d %H:%M:%S"):
@@ -34,17 +38,22 @@ def date_to_string(x, format="%Y-%m-%d %H:%M:%S"):
 
 def string_to_date(x, format="%Y-%m-%d %H:%M:%S"):
     if isinstance(x, str):
-        return dt.datetime.strptime(x, format).date() if not pd.isnull(x) else np.nan
+        return (
+            dt.datetime.strptime(x, format).date()
+            if not pd.isnull(x)
+            else np.nan
+        )
     elif isinstance(x, dt.date):
         return x
     else:
         return np.nan
 
+
 def parsedates(column):
-    """ Convert Series from string to date
+    """Convert Series from string to date
 
     Args:
-        column (pd.Series): date string column 
+        column (pd.Series): date string column
 
     Returns:
         [pd.Series]: datetime column
@@ -52,11 +61,12 @@ def parsedates(column):
     column_stripped = column.astype(str).str.strip()
     return pd.to_datetime(column_stripped, format="%d-%b-%y")
 
+
 def parsedates_withhour(column):
-    """ Convert Series from string to date
+    """Convert Series from string to date
 
     Args:
-        column (pd.Series): date string column 
+        column (pd.Series): date string column
 
     Returns:
         [pd.Series]: datetime column
@@ -66,19 +76,25 @@ def parsedates_withhour(column):
         return pd.to_datetime(column_stripped, format="%d/%m/%Y %H:%M:%S")
     except:
         logging.warning(f"date {column.name} has wrong format!")
-        return pd.to_datetime(column_stripped, format="%d/%m/%Y %H:%M:%S", errors='coerce')
+        return pd.to_datetime(
+            column_stripped, format="%d/%m/%Y %H:%M:%S", errors="coerce"
+        )
+
 
 def string_contains(x, words):
     return any([w in x for w in words])
 
+
 def cutstring(column, stop=3):
     return column.astype(str).str.slice(stop=stop)
+
 
 def as_list(x):
     if isinstance(x, list):
         return x
     else:
         return [x]
+
 
 def logging_list(l, l_name="", level="DEBUG"):
     logging.log(getattr(logging, level), l_name)
@@ -94,12 +110,14 @@ def remove_columns(dataset, cols):
     dataset = dataset.drop(cols, axis=1)
     return dataset
 
+
 def keep_only_columns(dataset, cols):
     if isinstance(cols, str):
         cols = [cols]
     cols = [c for c in dataset.columns if c not in cols]
     dataset = dataset.drop(cols, axis=1)
     return dataset
+
 
 def save_dict_to_json(d, file):
     with open(file, "w") as fp:
@@ -109,6 +127,19 @@ def save_dict_to_json(d, file):
 def load_class(path_to_module, class_name):
     module = importlib.import_module(path_to_module)
     return getattr(module, class_name)
+
+
+# Check Dataframe Utility function
+def check_df(dataframe, sample=False):
+
+    logging.info(
+        f"Dataframe Shape: {dataframe.shape} with rows: {dataframe.shape[0]} and columns: {dataframe.shape[1]}"
+    )
+    logging.info(f"\nDF Columns: \n{list(dataframe.columns)}")
+    if sample:
+        logging.info(f"\nData:\n{dataframe.head(5)}")
+
+    return None
 
 
 # FILES
@@ -127,7 +158,9 @@ def read_file(file):
         return pd.read_excel(file, sheet_name=0)
     else:
         raise NotImplementedError(
-            "Reading of files with extension " + file_ext + " is not implemented."
+            "Reading of files with extension "
+            + file_ext
+            + " is not implemented."
         )
 
 
@@ -139,7 +172,9 @@ def write_file(df, file):
         df.to_excel(file, index=False)
     else:
         raise NotImplementedError(
-            "Saving of files with extension " + file_ext + " is not implemented."
+            "Saving of files with extension "
+            + file_ext
+            + " is not implemented."
         )
 
 
@@ -221,7 +256,9 @@ def read_yaml(file_path, filename=""):
         return data
 
     except Exception as message:
-        logging.error(f"Impossible to load the file: {filename} with path: {file_path}")
+        logging.error(
+            f"Impossible to load the file: {filename} with path: {file_path}"
+        )
         logging.error(f"Error: {message}")
         return None
 
@@ -233,7 +270,9 @@ def write_dataset_yaml(to_path="", filename="", dataset=None):
     file_path = checkpath(to_path, filename)
 
     if isinstance(dataset, pd.DataFrame) == False:
-        logging.error(f"Please use a Pandas dataframe with write_dataset_yaml function")
+        logging.error(
+            f"Please use a Pandas dataframe with write_dataset_yaml function"
+        )
         return False
 
     try:

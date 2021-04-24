@@ -8,6 +8,14 @@
 #### > CUSTOM RULES ####
 ########################
 
+#We don't want to push the data
+*.csv
+*.xlsx
+*.xls
+.csv
+.xlsx
+.xls
+
 #Add here your custom rules for the project
 
 ##########################################
