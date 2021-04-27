@@ -80,3 +80,54 @@ How to download a file from streamlit (online forum discussion)
 - https://discuss.streamlit.io/t/how-to-download-file-in-streamlit/1806/49
 - custom download button: https://gitlab.com/-/snippets/2106399
 
+
+## Configure VSCode
+If you want to configure the VSCode debugger for your project please consider to create inside the `.vscode` folder the file: `launch.json`.
+Inside this file insert this configurations to use the debugger with streamlit or to launch a single python file
+```json
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python: Current File",
+      "type": "python",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "PYTHONPATH": "${cwd}"
+      }
+    },
+    {
+      "name": "Python: Streamlit",
+      "type": "python",
+      "request": "launch",
+      "module": "streamlit.cli",
+      "args": ["run", "${workspaceFolder}/main.py"],
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "PYTHONPATH": "${cwd}"
+      }
+    },
+    {
+      "name": "Flask Backend",
+      "type": "python",
+      "request": "launch",
+      "port": 8000,
+      "host": "localhost",
+      "program": "${workspaceFolder}/server.py",
+      "console": "integratedTerminal",
+      "env": {
+        "API_ENDPOINT_PORT": "8000",
+        "VERBOSITY": "debug"
+        // "PYTHONPATH": "${cwd}"
+      }
+    }
+  ]
+}
+
+```
