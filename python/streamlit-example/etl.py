@@ -12,7 +12,7 @@ if __name__ == "__main__":
 
     dataset = None
     # Extract and import data from remote repo
-    # dataset = import_data(remote=True)
+    dataset = import_data(remote=True)
     # Transform data
     dataset = transform(dataset)
     # Save data to disk

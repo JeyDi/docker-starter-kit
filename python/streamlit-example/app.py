@@ -16,9 +16,9 @@ def get_iris() -> pd.DataFrame:
 
 iris = get_iris()
 
-# generate sidbar
+# generate sidebar
 st.sidebar.header("Feature Filter")
-
+st.sidebar.header("Proviamolo")
 min_sepal_length, max_sepal_length = st.sidebar.slider(
     "Select sepal length range:",
     min(iris.sepal_length),
@@ -47,6 +47,9 @@ min_petal_width, max_petal_width = st.sidebar.slider(
 species = st.sidebar.multiselect(
     "Select species:", list(iris.species.unique()), list(iris.species.unique())
 )
+
+test = st.sidebar.checkbox("Proviamo i componenti", value=True)
+st.sidebar.markdown("## Proviamo il markdown")
 
 restrict = pd.DataFrame(
     data=[
@@ -77,7 +80,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-st.title("Streamlit Test App")
+st.title("Streamlit Test App versione 1.0")
 st.write(
     """
 Some *basic* [__Streamlit__](https://www.streamlit.io/) App to explore Data!

@@ -26,6 +26,7 @@ jupyter = "^1.0.0"
 Unidecode = "^1.2.0"
 watchdog = "^2.0.3"
 fsspec = "^2021.4.0"
+openpyxl = "^3.0.7"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.9.1"

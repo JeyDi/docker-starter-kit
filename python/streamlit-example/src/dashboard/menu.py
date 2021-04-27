@@ -2,15 +2,14 @@ import logging
 
 import streamlit as st
 
-from src.etl.extract import import_data
-from src.etl.transform import transform
+from src.dashboard.menus.side_components import (
+    visualize_dataset,
+    search_room,
+    download_data,
+)
 
-# from src.dashboard.menus.components import (
-#     menu_scraper,
-# )
 
-
-def side_menu():
+def side_menu(dataframe):
     """
     Streamlit side config menu
     """
@@ -18,50 +17,31 @@ def side_menu():
 
     st.sidebar.markdown("**Configuration Panel**")
 
-    #### PROJECT CONFIGURATION ####
-
-    # menu_scraper()
-
     #### FILTER DATA ####
-
-    #### VISUALIZATION ####
+    visualize_dataset(dataframe)
+    search_room(dataframe)
+        
+    #### DOWNLOAD DATA ####
+    download_data(dataframe)
 
 
 def main_menu():
 
     logging.debug("Launching main menu")
-
+    st.markdown(
+        f"""
+    <style>
+        .reportview-container .main .block-container{{
+            max-width: 1400px;
+        }}
+    </style>
+    """,
+        unsafe_allow_html=True,
+    )
     # create the dashboard heading
     st.title("Python Biella Group")
     st.markdown("## Streamlit project example")
     st.markdown("How to use streamlit for your Data Project")
-    st.markdown("<-- Open side menu to run functionalities")
-
-    return True
-
-
-def launch():
-    """Main function to launch all the streamlit functionalities
-
-    Returns:
-        bool: True if the process is ok, False if there are some errors
-    """
-
-    logging.info("Starting streamlit program")
-
-    # Streamlit page settings
-    st.set_page_config(
-        layout="wide",
-    )
-
-    # ETL: Launch extraction of the csv files
-    # datasets = import_data()
-    # datasets = transform(datasets)
-
-    # ETL: Launch transformations of the csv files
-
-    # Launch the side menu for all the configurations
-    main_menu()
-    side_menu()
+    st.markdown("<-- Open side menu to filter the data")
 
     return True

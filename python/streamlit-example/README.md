@@ -6,6 +6,15 @@ This is a simple project example with good structure and code organization for d
 
 The objective of this project is to have a project template for your dashboards.
 
+If you want to see a beautiful cheatsheet with all commands and API for dashboard see:
+- https://share.streamlit.io/daniellewisdl/streamlit-cheat-sheet/app.py
+
+If you want to see the full documentation and reference for the streamlit components see:
+- https://docs.streamlit.io/en/stable/api.html
+
+Pandas Styling documentation 
+- https://pandas.pydata.org/pandas-docs/stable/user_guide/style.html
+
 **Features**:
 - Dashboard created with: `Streamlit`
 - Beautiful plots with `Plotly`
@@ -65,4 +74,9 @@ mkdocs serve
 ```
 
 
+## Other useful information
+
+How to download a file from streamlit (online forum discussion)
+- https://discuss.streamlit.io/t/how-to-download-file-in-streamlit/1806/49
+- custom download button: https://gitlab.com/-/snippets/2106399
 

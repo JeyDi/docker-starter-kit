@@ -12,6 +12,7 @@ from config import (
     ETL_CSV_ARGS,
     ETL_DATA_PATH,
     ETL_EXTRACTION_CONFIG,
+    ETL_DATA_CONFIG,
 )
 
 
@@ -26,7 +27,7 @@ def download_data(
 
     # now support only gz file
     if url.split(".")[-1] in ["gz"]:
-        output_name_complete = output_name + "gz"
+        output_name_complete = output_name + ".gz"
         convert = True
     else:
         output_name_complete = output_name
@@ -39,7 +40,7 @@ def download_data(
         logging.info("Unzipping the file")
 
         with gzip.open(write_path_complete, "rb") as f_in:
-            write_path_csv = os.path.join(write_path, output_name)
+            write_path_csv = os.path.join(write_path, output_name + ".csv")
             with open(write_path_csv, "wb") as f_out:
                 shutil.copyfileobj(f_in, f_out)
         if remove_temp:
@@ -63,11 +64,11 @@ def read_dataset(complete_path: str, csv_arguments={}) -> pd.DataFrame:
 
 
 # Import data extract main function
-def import_data(remote=False, config=ETL_EXTRACTION_CONFIG) -> dict:
+def import_data(remote=False, config=ETL_DATA_CONFIG) -> dict:
     logging.info("Start importing the data")
 
     # Get the dataframe names
-    dataframe_names = list(config.values())
+    dataframe_names = list(config.keys())
     # Get the filenames from config
     data_files = list(config.values())
 

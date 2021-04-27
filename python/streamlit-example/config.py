@@ -13,6 +13,7 @@ LOG_PATH = os.getenv("LOG_PATH", "./logs")
 
 # Define the logs
 # Set verbosity
+
 log_level = level = logging.getLevelName(VERBOSITY.upper())
 if isinstance(log_level, int):
     logging.basicConfig(
@@ -34,9 +35,9 @@ yaml_path = os.path.join(get_folder_path("."), "config")
 
 # ETL Configs
 ETL_CONFIG = read_yaml(yaml_path, filename="etl.yml")
-ETL_DATASET_CONFIG = ETL_CONFIG["dataset"] # name of the datasets
-ETL_DATA_CONFIG = ETL_CONFIG["etl"] # remote input
-ETL_EXTRACTION_CONFIG = ETL_CONFIG["etl_results"] # file on disk
+ETL_DATASET_CONFIG = ETL_CONFIG["dataset"]  # name of the datasets
+ETL_DATA_CONFIG = ETL_CONFIG["etl"]  # remote input
+ETL_EXTRACTION_CONFIG = ETL_CONFIG["etl_results"]  # file on disk
 ETL_DATA_PATH = ETL_CONFIG["data_path"]
 ETL_CSV_ARGS = ETL_CONFIG["csv_args"]
 
