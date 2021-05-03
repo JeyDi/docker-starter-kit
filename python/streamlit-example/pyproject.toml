@@ -27,6 +27,12 @@ Unidecode = "^1.2.0"
 watchdog = "^2.0.3"
 fsspec = "^2021.4.0"
 openpyxl = "^3.0.7"
+plotnine = "^0.8.0"
+pdfkit = "^0.6.1"
+jupyterlab = "^3.0.14"
+ipykernel = "^5.5.3"
+wkhtmltopdf = "^0.2"
+papermill = "^2.3.3"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.9.1"

@@ -3,15 +3,15 @@
 # To build mkdocs use: mkdocs build --clean
 
 # Project information
-site_name: Prysmian Noodle
-site_url: https://moxoff.com
-site_description: docs website for Prysmian Noodle
-site_author: Moxoff
-copyright: Made with ♥ by Moxoff S.p.a
+site_name: PythonBiellaGroup Dashboard
+site_url: https://github.com/PythonBiellaGroup
+site_description: Documentation for PythonBiellaGroup dashboard
+site_author: PythonBiellaGroup
+copyright: Made with ♥ by PythonBiellaGroup
 
 # Repository
-repo_url: https://gitlab.com/moxoff/prysmian/predictive-quality/noodle-core
-repo_name: prysmian/predictive-quality/noodle-core
+repo_url: https://github.com/PythonBiellaGroup/MaterialeLezioni
+repo_name: PythonBiellaGroup/materialeCorsi
 edit_uri: "" #disables edit button
 
 # Markdown extensions
@@ -62,16 +62,16 @@ theme:
     # Light mode
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: deep-purple
-      accent: indigo
+      primary: blue
+      accent: orange
       toggle:
         icon: material/toggle-switch-off-outline
         name: Switch to dark mode
     # Dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: deep-purple
-      accent: blue
+      primary: blue
+      accent: orange
       toggle:
         icon: material/toggle-switch
         name: Switch to light mode
@@ -114,7 +114,7 @@ plugins:
 # Page tree
 nav:
   - Home:
-      - Noodle: index.md
+      - Home: index.md
   - List of functions:
       - Test functions: functions/workflows.md
   # - Reference:
@@ -129,7 +129,7 @@ nav:
 
 #Extra material theme settings
 extra:
-  disqus: Moxoff
+  disqus: PythonBiellaGroup
   generator: false
   social:
     - icon: fontawesome/solid/paper-plane

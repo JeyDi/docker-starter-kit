@@ -20,7 +20,7 @@ def side_menu(dataframe):
     #### FILTER DATA ####
     visualize_dataset(dataframe)
     search_room(dataframe)
-        
+
     #### DOWNLOAD DATA ####
     download_data(dataframe)
 

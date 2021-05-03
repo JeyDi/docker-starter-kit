@@ -1,5 +1,6 @@
 import logging
 
+from config import configure_logging
 from etl.extract import import_data
 from etl.transform import transform
 from etl.load import load
@@ -7,6 +8,8 @@ from etl.load import load
 # from etl.load import
 
 if __name__ == "__main__":
+
+    configure_logging()
     # create the dashboard heading
     logging.info("Launching ETL")
 
