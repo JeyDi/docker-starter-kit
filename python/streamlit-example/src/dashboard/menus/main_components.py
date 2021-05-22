@@ -3,7 +3,11 @@ import streamlit as st
 
 
 def main_room_type(df):
+    """Proviamo a documentare il codice
 
+    Args:
+        df (pd.DataFrame): Input dataframe
+    """
     dataframe = df.copy()
 
     with st.beta_expander("Rooms", expanded=True):

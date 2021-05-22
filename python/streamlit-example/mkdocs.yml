@@ -117,6 +117,7 @@ nav:
       - Home: index.md
   - List of functions:
       - Test functions: functions/workflows.md
+      - Prova: functions/testiamo.md
   # - Reference:
   #     - CLI: main.md
   #     - Configuration: config.md

@@ -32,7 +32,7 @@ pdfkit = "^0.6.1"
 jupyterlab = "^3.0.14"
 ipykernel = "^5.5.3"
 wkhtmltopdf = "^0.2"
-papermill = "^2.3.3"
+papermill = "2.3.1"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.9.1"

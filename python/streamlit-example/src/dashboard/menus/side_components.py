@@ -95,6 +95,7 @@ def search_room(dataframe: pd.DataFrame) -> bool:
             .highlight_null(null_color="red")
             .set_caption("Result table with all the data filtered")
         )
+
         return True
 
     barplot = st.sidebar.button(
