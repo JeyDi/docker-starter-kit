@@ -1,0 +1,37 @@
+version: "3.0"
+volumes:
+  elastichsearch_data:
+    driver: local
+services:
+  elasticsearch:
+    build:
+      context: .
+      dockerfile: Dockerfile_elasticsearch
+    environment:
+      discovery.type: single-node
+      cluster.name: elasticsearch
+      network.bind_host: 0.0.0.0
+      network.publish_host: 0.0.0.0
+      xpack.security.enabled: "false"
+      bootstrap.memory_lock: "true"
+      ES_JAVA_OPTS: "-Xms1g -Xmx1g"
+    volumes:
+      - ${DEPLOY_VOLUMES_DIR:-.}/elastichsearch_data:/usr/share/elasticsearch/data
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    restart: always
+    ports:
+      - ${ES_TRANSPORT_PORT:-9300}:9300
+      - ${ES_REST_PORT:-9200}:9200
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.7.0
+    environment:
+      SERVER_NAME: kibana
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    restart: always
+    ports:
+      - ${KIBANA_PORT:-5601}:5601
+    links:
+      - elasticsearch:elasticsearch
