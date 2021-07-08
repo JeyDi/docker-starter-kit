@@ -1,0 +1,40 @@
+[tool.poetry]
+name = "project-example"
+version = "0.1.0"
+description = "Poetry example config"
+authors = ["Andrea Guzzo <andrea.guzzo92@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+pandas = "^1.2.4"
+numpy = "^1.20.2"
+matplotlib = "^3.4.2"
+seaborn = "^0.11.1"
+plotly = "^4.14.3"
+pyaml = "^20.4.0"
+sklearn = "^0.0"
+xgboost = "^1.4.2"
+psycopg2 = "^2.8.6"
+Flask = "^2.0.1"
+Flask-Cors = "^3.0.10"
+gunicorn = "^20.1.0"
+Unidecode = "^1.2.0"
+flake8-mypy = "^17.8.0"
+pytest = "^6.2.4"
+
+
+[tool.poetry.dev-dependencies]
+flake8 = "^3.9.2"
+flake8-isort = "^4.0.0"
+flake8-builtins = "^1.5.3"
+autopep8 = "^1.5.7"
+pylint = "^2.8.2"
+bandit = "^1.7.0"
+black = "^21.5b0"
+jupyter = "^1.0.0"
+mypy = "^0.812"
+flake8-bandit = "^2.1.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
