@@ -1,0 +1,29 @@
+version: '3'
+services:
+  nginx-https:
+    build:
+      context: .
+      dockerfile: Dockerfile_nginx_https
+    environment:
+      - DOMAIN=${DOMAIN}
+    ports:
+      - "443:443"
+    volumes:
+      - ${DEPLOY_VOLUMES_DIR:-.}/letsencrypt/etc/letsencrypt/:/etc/letsencrypt/
+      - ${DEPLOY_VOLUMES_DIR:-.}/nginx/etc/nginx/ssl/dhparam.pem:/etc/nginx/ssl/dhparam.pem
+    restart: unless-stopped
+  nginx-http:
+    build:
+      context: .
+      dockerfile: Dockerfile_nginx_http
+    environment:
+      - DOMAIN=${DOMAIN}
+    ports:
+      - "80:80"
+    restart: unless-stopped
+  letsencrypt:
+    image: moxoff/letsencrypt
+    volumes:
+      - ${DEPLOY_VOLUMES_DIR:-.}/letsencrypt/etc/letsencrypt/:/etc/letsencrypt/
+    command: -m admin@moxoff.com -d ${DOMAIN}
+    restart: unless-stopped
