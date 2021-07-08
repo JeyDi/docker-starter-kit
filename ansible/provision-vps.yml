@@ -1,0 +1,22 @@
+---
+- hosts: personal_setup
+  remote_user: root
+  vars:
+    test_var: "prova"
+  vars_prompt:
+    - name: "user_name"
+      prompt: "Enter a name for the new user"
+      private: no
+      confirm: no
+    - name: "user_password"
+      prompt: "Enter a password for the new user"
+      private: yes
+      encrypt: "sha512_crypt"
+      confirm: yes
+      salt_size: 7
+  roles:
+    - base
+    - journal_dir
+    - cran_r
+    - nodejs
+    - docker

@@ -1,0 +1,4 @@
+- name: stop service docker on ubuntu, if running
+  systemd:
+    name: docker
+    state: stopped

@@ -1,0 +1,25 @@
+- name: add cran key for ubuntu
+  apt_key:
+    id: E298A3A825C0D65DFD57CBB651716619E084DAB9
+    keyserver: keyserver.ubuntu.com
+  when: ansible_distribution is match("Ubuntu") and ansible_distribution_version is version('18.04', '<')
+- name: add cran key for debian
+  apt_key:
+    id: E19F5F87128899B192B1A2C2AD5F960A256A04AF
+    keyserver: keys.gnupg.net
+  when: ansible_distribution is match("Debian")
+- name: add cran repository on ubuntu < 18.04
+  apt_repository:
+    repo: deb http://cran.mirror.garr.it/mirrors/CRAN/bin/linux/ubuntu {{ ansible_distribution_release }}/
+    filename: cran
+  # TODO: check if this distinction can be removed in the future (there is currently no "bionic" repository, and "bionic-cran35" is broken)
+  when: ansible_distribution is match("Ubuntu") and ansible_distribution_version is version('18.04', '<')
+- name: add cran repository on debian
+  apt_repository:
+    repo: deb http://cran.mirror.garr.it/mirrors/CRAN/bin/linux/debian {{ ansible_distribution_release }}-cran34/
+    filename: cran
+  when: ansible_distribution is match("Debian")
+- name: install R
+  apt:
+    name: r-base
+    state: present

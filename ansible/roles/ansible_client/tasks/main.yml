@@ -1,0 +1,11 @@
+- name: install python
+  raw: apt-get -y update && dpkg -l 'python-simplejson' | grep '^ii' || apt-get -y install python-simplejson
+  register: install_python_simplejson
+  changed_when: not install_python_simplejson.stdout is search("\nii\s*python-simplejson")
+- name: permit root login
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '.*PermitRootLogin'
+    line: 'PermitRootLogin without-password'
+  notify:
+    - restart ssh
