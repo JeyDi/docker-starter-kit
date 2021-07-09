@@ -24,7 +24,9 @@
     name: "{{user_name}}"
     shell: /bin/bash
     password: "{{user_password}}"
+  become: yes
 - name: Deploy SSH Key
   authorized_key: user="{{user_name}}"
                   key="{{ lookup('file', './keys/authorized/' + credential_file )}}"
                   state=present
+  become: yes

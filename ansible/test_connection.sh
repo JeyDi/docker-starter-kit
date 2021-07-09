@@ -1,0 +1,1 @@
+ansible -m ping -i inventory.ini -l "personal_setup"
