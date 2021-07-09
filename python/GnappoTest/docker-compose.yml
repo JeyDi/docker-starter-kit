@@ -1,0 +1,61 @@
+version: "3"
+services:
+    # mongo:
+    #     image: mongo
+    #     restart: always
+    #     environment:
+    #         MONGO_INITDB_ROOT_USERNAME: root
+    #         MONGO_INITDB_ROOT_PASSWORD: example
+    #     ports:
+    #         - 27017:27017
+    gnappoMongo:
+        image: mongo:latest
+        # container_name: gnappoMongo
+        environment:
+            MONGO_INITDB_DATABASE: gnappoTest
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: moxoff
+        volumes:
+        # - ${DEPLOY_DIR:-.}/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+        - ${DEPLOY_VOLUMES_DIR:-.}/volumes/mongo-volume:/data/db
+        ports:
+            - "27017:27017"
+            - "27018:27018"
+            - "27019:27019"
+        restart: always
+
+    mongo-express:
+        image: mongo-express:latest
+        restart: always
+        ports:
+            - 8081:8081
+        environment:
+            ME_CONFIG_MONGODB_ADMINUSERNAME: root
+            ME_CONFIG_MONGODB_ADMINPASSWORD: moxoff
+        depends_on: 
+            - gnappoMongo
+
+    project:
+        # image: registry.gitlab.com/moxoff/mmm/mmm-core/mmm-core:${CORE_VERSION:-master}
+        build:
+            context: ./
+            dockerfile: Dockerfile_gnappo
+        environment:
+            GNAPPO_VERSION: ${GNAPPO_VERSION:-1.0.0}
+            GNAPPO_USER: root
+            GNAPPO_PWD: moxoff
+            GNAPPO_HOST: gnappoMongo
+            GNAPPO_PORT: 27017
+            GNAPPO_DB_NAME: gnappoTest
+        #folder inside the docker container
+            SCRIPT_TO_LAUNCH: /project/test.py
+        # - PRJ_CORE_WORKING_DIR=/home
+        # - PRJ_DB_HOST=${CORE_PSQL_HOST:-mmm-db}
+        # - PRJ_DB_USER=${CORE_PSQL_USER:-mmm}
+        # - PRJ_DB_PORT=${CORE_PSQL_PORT:-5432}
+        # - PRJ_DB_PWD=${CORE_PSQL_PASSWORD:-mmm}
+        # - PRJ_DB_NAME=${CORE_PSQL_DB:-mmm}
+        ports:
+            - "7000:7000"
+        volumes:
+            - ${DEPLOY_VOLUMES_DIR:-.}/volumes/project:/project/volume

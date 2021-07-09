@@ -1,0 +1,18 @@
+#Debian
+FROM ubuntu:20.04
+
+
+# Install Node
+RUN apt-get update && apt-get install -y curl && curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -y nodejs
+
+# Install Python
+RUN apt-get update && apt-get install -y python3.8 python3-pip
+
+# Copy all files
+WORKDIR /project
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+
+# Launch Gnappo
+CMD npx -y @moxoff/gnappo@${GNAPPO_VERSION} --run ${SCRIPT_TO_LAUNCH} --cors --mongodb-url mongodb://${GNAPPO_USER}:${GNAPPO_PWD}@${GNAPPO_HOST}:${GNAPPO_PORT}/${GNAPPO_DB_NAME}
