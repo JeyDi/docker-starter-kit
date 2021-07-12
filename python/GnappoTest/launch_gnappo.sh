@@ -1,1 +1,4 @@
-npx @moxoff/gnappo --run $PWD/test.py --mongodb-url mongodb://localhost:27017/test -n 4
+npx @moxoff/gnappo --run $PWD/test.py --mongodb-url mongo://localhost:27017/test
+
+#parallel way (multiprocess)
+#npx @moxoff/gnappo --run $PWD/test.py --mongodb-url mongo://localhost:27017/test -n 4

@@ -1,0 +1,55 @@
+---
+# tasks file for fail2ban
+
+- name: install fail2ban
+  ansible.builtin.package:
+    name: fail2ban
+    state: present
+  become: yes
+
+- name: configure fail2ban.local
+  community.general.ini_file:
+    path: /etc/fail2ban/fail2ban.local
+    section: "{{ item.section }}"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    mode: "0640"
+  loop: "{{ fail2ban_base_configuration + fail2ban_configuration }}"
+  loop_control:
+    label: "{{ item.option }}"
+  become: yes
+
+- name: configure jail.local
+  community.general.ini_file:
+    path: /etc/fail2ban/jail.local
+    section: "{{ item.section }}"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    mode: "0640"
+  loop: "{{ fail2ban_base_jail_configuration + fail2ban_jail_configuration }}"
+  loop_control:
+    label: "{{ item.option }}"
+  become: yes
+
+- name: stat auth log file
+  ansible.builtin.stat:
+    path: /var/log/auth.log
+  register: fail2ban_auth
+  become: yes
+
+- name: touch auth log file
+  ansible.builtin.file:
+    path: /var/log/auth.log
+    state: touch
+    mode: "0640"
+  when:
+    - fail2ban_auth.stat.exists is defined
+    - not fail2ban_auth.stat.exists
+  become: yes
+
+- name: start and enable fail2ban
+  ansible.builtin.service:
+    name: "{{ fail2ban_service }}"
+    state: started
+    enabled: yes
+  become: yes

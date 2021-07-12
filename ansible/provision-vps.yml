@@ -15,8 +15,11 @@
       confirm: yes
       salt_size: 7
   roles:
-    - base
-    - journal_dir
-    - cran_r
-    - nodejs
-    - docker
+    - {role: 'base', tags: 'base'}
+    - {role: 'fail2ban', tags: 'fail2ban'}
+    - {role: 'journal_dir', tags: 'journal_dir'}
+    - {role: 'python', tags: 'python'}
+    - {role: 'cran_r', tags: 'cran_r'}
+    - {role: 'nodejs', tags: 'nodejs'}
+    - {role: 'docker', tags: 'docker'}
+    

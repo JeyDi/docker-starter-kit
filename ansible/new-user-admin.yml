@@ -1,0 +1,37 @@
+---
+- hosts: personal_setup
+  vars:
+    test_var: "prova"
+  vars_prompt:
+    - name: "user_name"
+      prompt: "Enter a name for the new user"
+      private: no
+      confirm: no
+    - name: "user_password"
+      prompt: "Enter a password for the new user"
+      private: yes
+      encrypt: "sha512_crypt"
+      confirm: yes
+      salt_size: 7
+    - name: "credential_file"
+      prompt: "Enter the credential file name for the user"
+      private: no
+      confirm: no
+  tasks:
+    #Add new sudo user
+    - name: Add a new user
+      user:
+        name: "{{user_name}}"
+        shell: /bin/bash
+        password: "{{user_password}}"
+      become: yes
+    - name: Add new user to the sudoers
+      copy:
+        dest: '/etc/sudoers.d/"{{user_name}}"'
+        content: '"{{user_name}}" ALL=(ALL)  NOPASSWD: ALL'
+      become: yes
+    - name: Deploy SSH Key
+      authorized_key: user="{{user_name}}"
+                      key="{{ lookup('file', './keys/authorized/' + credential_file )}}"
+                      state=present
+      become: yes
