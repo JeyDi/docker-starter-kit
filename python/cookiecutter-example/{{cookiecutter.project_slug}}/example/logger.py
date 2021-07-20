@@ -4,29 +4,13 @@
 
 import logging  # using standard library
 import os
-import re
-from werkzeug import serving
-
-
-def disable_endpoint_logs():
-    """Disable logs for requests to specific endpoints."""
-
-    disabled_endpoints = ("/", "/monitoring/analysis/status")
-
-    parent_log_request = serving.WSGIRequestHandler.log_request
-
-    def log_request(self, *args, **kwargs):
-        if not any(re.match(f"{de}$", self.path) for de in disabled_endpoints):
-            parent_log_request(self, *args, **kwargs)
-
-    serving.WSGIRequestHandler.log_request = log_request
-
 
 # using rich library
 # from rich.logging import RichHandler
 
 # Set the logs variables
-VERBOSITY = os.getenv("VERBOSITY", "debug")  # info as default, #debug for local dev
+# info as default, #debug for local dev
+VERBOSITY = os.getenv("VERBOSITY", "debug")
 LOG_PATH = os.getenv("LOG_PATH", "./logs")  # logs folder
 
 logger = logging.getLogger(__name__)
@@ -73,8 +57,6 @@ file_handler.setFormatter(file_formatter)
 logger.addHandler(shell_handler)
 logger.addHandler(file_handler)
 
-# disable logging of status route calls
-disable_endpoint_logs()
 
 # Logger usage (by level)
 # logger.debug("debug statement")
