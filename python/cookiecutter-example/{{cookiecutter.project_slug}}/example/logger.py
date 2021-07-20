@@ -5,16 +5,24 @@
 import logging  # using standard library
 import os
 
+
+from logging.handlers import RotatingFileHandler
+
+# from logging.handlers import TimeRotatingFileHandler
+
 # using rich library
 # from rich.logging import RichHandler
 
-# Set the logs costants
+# Set the logs costants (You can use env var)
 # -------------------------------------------------
-VERBOSITY = os.getenv("VERBOSITY", "debug")  # info as default, #debug for local dev
+# VERBOSITY = info as default, #debug for local dev
+VERBOSITY = os.getenv("VERBOSITY", "debug")
 LOG_PATH = os.getenv("LOG_PATH", "./logs")  # logs folder
 LOGGER_FILENAME = "daemon.log"
-FILE_INTERVAL = 1
-FILE_BACKUP_COUNT = 120
+FILE_TIME_WHEN = "D"  # Days
+FILE_TIME_INTERVAL = 30
+FILE_BACKUP_COUNT = 12  # Number of backup
+FILE_MAX_BYTES = 100 * 1024 * 1024  # 100 MB
 FILE_ENCODING = "utf-8"
 FILE_DELAY = False
 
@@ -39,14 +47,28 @@ log_level = logging.getLevelName(log_name)
 # handler for shell
 shell_handler = logging.StreamHandler()
 
-# handler for file (TimeRotating = autodelete to avoid oversized logs)
-file_handler = logging.TimedRotatingFileHandler(
+
+# Rotating handler for file
+# (Rotating = autodelete by space and backup number to avoid oversized logs)
+file_handler = RotatingFileHandler(
     FILE_LOG_PATH,
-    interval=FILE_INTERVAL,
+    mode="a",
+    maxBytes=FILE_MAX_BYTES,
     backupCount=FILE_BACKUP_COUNT,
     encoding=FILE_ENCODING,
     delay=FILE_DELAY,
 )
+
+# TimeRotating handler for file
+# (TimeRotating = autodelete by time to avoid oversized logs)
+# file_handler = logging.handlers.TimeRotatingFileHandler(
+#     FILE_LOG_PATH,
+#     when=FILE_TIME_WHEN,
+#     interval=FILE_TIME_INTERVAL,
+#     backupCount=FILE_BACKUP_COUNT,
+#     encoding=FILE_ENCODING,
+#     delay=FILE_DELAY,
+# )
 
 # beautiful log with rich library
 # shell_handler = RichHandler()
