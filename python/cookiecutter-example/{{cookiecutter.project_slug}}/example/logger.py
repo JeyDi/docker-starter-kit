@@ -8,11 +8,28 @@ import os
 # using rich library
 # from rich.logging import RichHandler
 
-# Set the logs variables
-# info as default, #debug for local dev
-VERBOSITY = os.getenv("VERBOSITY", "debug")
+# Set the logs costants
+# -------------------------------------------------
+VERBOSITY = os.getenv("VERBOSITY", "debug")  # info as default, #debug for local dev
 LOG_PATH = os.getenv("LOG_PATH", "./logs")  # logs folder
+LOGGER_FILENAME = "daemon.log"
+FILE_INTERVAL = 1
+FILE_BACKUP_COUNT = 120
+FILE_ENCODING = "utf-8"
+FILE_DELAY = False
 
+# shell formatter syntax
+SHELL_FORMATTER_SYNTAX = "%(asctime)s (%(levelname)s) \t| %(message)s"
+# file formatter syntax
+FILE_FORMATTER_SYNTAX = "%(asctime)s (%(levelname)s) \t| [%(filename)s:%(funcName)s:%(lineno)d] \t| %(message)s"
+
+# handler for file (make the folder if not exist)
+if not os.path.exists(LOG_PATH):
+    os.makedirs(LOG_PATH)
+FILE_LOG_PATH = os.path.join(LOG_PATH, LOGGER_FILENAME)
+# -------------------------------------------------
+
+# Define the logger
 logger = logging.getLogger(__name__)
 
 # For your application you can just use this: from logger import logger
@@ -22,12 +39,14 @@ log_level = logging.getLevelName(log_name)
 # handler for shell
 shell_handler = logging.StreamHandler()
 
-# handler for file
-if not os.path.exists(LOG_PATH):
-    os.makedirs(LOG_PATH)
-log_path = os.path.join(LOG_PATH, "daemon.log")
-
-file_handler = logging.FileHandler(log_path)
+# handler for file (TimeRotating = autodelete to avoid oversized logs)
+file_handler = logging.TimedRotatingFileHandler(
+    FILE_LOG_PATH,
+    interval=FILE_INTERVAL,
+    backupCount=FILE_BACKUP_COUNT,
+    encoding=FILE_ENCODING,
+    delay=FILE_DELAY,
+)
 
 # beautiful log with rich library
 # shell_handler = RichHandler()
@@ -41,13 +60,9 @@ if isinstance(log_level, int):
 else:
     raise NotImplementedError(f"Logging level error: {log_name}")
 
-# formatter sintax
-fmt_shell = "%(asctime)s (%(levelname)s) \t| %(message)s"
-fmt_file = "%(asctime)s (%(levelname)s) \t| [%(filename)s:%(funcName)s:%(lineno)d] \t| %(message)s"
-
 # register the formatter with the formatter sintax
-shell_formatter = logging.Formatter(fmt_shell)
-file_formatter = logging.Formatter(fmt_file)
+shell_formatter = logging.Formatter(SHELL_FORMATTER_SYNTAX)
+file_formatter = logging.Formatter(FILE_FORMATTER_SYNTAX)
 
 # set the formatter
 shell_handler.setFormatter(shell_formatter)
