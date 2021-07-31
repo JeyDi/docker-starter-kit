@@ -1,0 +1,65 @@
+---
+
+name: Molecule
+
+on:  # yamllint disable-line rule:truthy
+  push:
+    branches:
+      - master
+      - ci_*
+      - issue*
+      - pr_*
+    paths-ignore:
+      - 'README.md'
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  molecule:
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        scenario:
+          - default
+        distros:
+          - centos8
+          - debian10
+          - debian9
+          - fedora32
+          - fedora33
+          - fedora34
+          - ubuntu1804
+          - ubuntu2004
+        releases:
+          - stable
+          - beta
+        versions:
+          - "1.55.1"
+          - ""
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          path: "${{ github.repository }}"
+      - name: Molecule
+        uses: robertdebock/molecule-action@2.6.17
+        env:
+          MOLECULE_DISTRO: "${{ matrix.distros }}"
+          TEST_RELEASE: "${{ matrix.releases }}"
+          TEST_VERSION: "${{ matrix.versions }}"
+        with:
+          options: parallel
+          scenario: ${{ matrix.scenario }}
+
+  release:
+    needs:
+      - molecule
+    runs-on: ubuntu-18.04
+    steps:
+      - name: galaxy
+        uses: robertdebock/galaxy-action@1.1.1
+        with:
+          galaxy_api_key: ${{ secrets.galaxy_api_key }}
+        if: ${{ github.ref == 'refs/heads/master' }}
