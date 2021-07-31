@@ -4,6 +4,8 @@ base_pkgs:
   - git
   - openssh-server
   - vim
+  - locate
+  - tree
   - texlive
   - texlive-extra-utils
   - texlive-latex-extra
@@ -22,7 +24,6 @@ base_pkgs:
   - screen
   - htop
   - tldr
-  - tree
   - bat
   - httpie
   - ncdu

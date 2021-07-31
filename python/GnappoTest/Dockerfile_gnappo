@@ -1,18 +1,44 @@
 #Debian
 FROM ubuntu:20.04
 
+# Metadata
+LABEL name="Moxoff Gnappo Test"
+LABEL maintainer="Moxoff"
+LABEL version="0.1"
+
+# Environment variable
+ARG YOUR_ENV="virtualenv"
+
+ENV YOUR_ENV=${YOUR_ENV} \
+    PYTHONFAULTHANDLER=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONHASHSEED=random \
+    PIP_NO_CACHE_DIR=off \
+    PIP_DISABLE_PIP_VERSION_CHECK=on \
+    PIP_DEFAULT_TIMEOUT=100 \
+    POETRY_VERSION=1.0.3 \
+    LC_ALL=C.UTF-8 \
+    LANG=C.UTF-8
+
+# Copy files and organize project folder
+WORKDIR /project
+COPY requirements.txt .
+COPY test.py /project/
+COPY poetry.lock pyproject.toml /project/
 
 # Install Node
 RUN apt-get update && apt-get install -y curl && curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -y nodejs
 
 # Install Python
 RUN apt-get update && apt-get install -y python3.8 python3-pip
+# Install Python libraries (uncomment this instead of Poetry, don't use together)
+# RUN pip install -r requirements.txt
 
-# Copy all files
-WORKDIR /project
-COPY requirements.txt /project
-RUN pip install -r /project/requirements.txt
-COPY . /project
+# Install Poetry and libraries (comment this if you want to use the normal python with virtualenv)
+RUN pip install "poetry==$POETRY_VERSION"
+RUN DEBIAN_FRONTEND=noninteractive apt update && apt install -y libpq-dev gcc
+RUN poetry config virtualenvs.create false \
+    && poetry install $(test "$YOUR_ENV" = production) --no-dev --no-interaction --no-ansi
 
 # Launch Gnappo
 CMD npx -y @moxoff/gnappo@${GNAPPO_VERSION} --run ${SCRIPT_TO_LAUNCH} --cors --mongodb-url mongodb://${GNAPPO_USER}:${GNAPPO_PWD}@${GNAPPO_HOST}:${GNAPPO_PORT}/${GNAPPO_DB_NAME}

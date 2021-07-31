@@ -1,0 +1,7 @@
+{
+    "project": "project",
+    "author": "author",
+    "project_slug": "{{cookiecutter.project.lower().strip().replace(' ','-')}}",
+    "license": ["MIT", "Spaghetti"],
+    "type": ["example", "simple", "full"]
+}

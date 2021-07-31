@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "{{cookiecutter.project_slug}}"
+version = "0.1.0"
+description = "Moxoff Python Logger System"
+authors = ["{{cookiecutter.author}}"]
+license = "{{cookiecutter.license}}"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+Werkzeug = "^2.0.1"
+cookiecutter = "^1.7.3"
+
+[tool.poetry.dev-dependencies]
+flake8 = "^3.9.2"
+flake8-isort = "^4.0.0"
+flake8-builtins = "^1.5.3"
+autopep8 = "^1.5.7"
+pylint = "^2.8.2"
+bandit = "^1.7.0"
+black = "^21.5b0"
+jupyter = "^1.0.0"
+mypy = "^0.812"
+flake8-bandit = "^2.1.2"
+flake8-mypy = "^17.8.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
