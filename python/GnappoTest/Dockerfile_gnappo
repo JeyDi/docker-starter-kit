@@ -23,8 +23,9 @@ ENV YOUR_ENV=${YOUR_ENV} \
 # Copy files and organize project folder
 WORKDIR /project
 COPY requirements.txt .
-COPY test.py /project/
-COPY poetry.lock pyproject.toml /project/
+COPY test.py .
+COPY poetry.lock .
+COPY pyproject.toml .
 
 # Install Node
 RUN apt-get update && apt-get install -y curl && curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -y nodejs
@@ -41,4 +42,4 @@ RUN poetry config virtualenvs.create false \
     && poetry install $(test "$YOUR_ENV" = production) --no-dev --no-interaction --no-ansi
 
 # Launch Gnappo
-CMD npx -y @moxoff/gnappo@${GNAPPO_VERSION} --run ${SCRIPT_TO_LAUNCH} --cors --mongodb-url mongodb://${GNAPPO_USER}:${GNAPPO_PWD}@${GNAPPO_HOST}:${GNAPPO_PORT}/${GNAPPO_DB_NAME}
+CMD npx -y @moxoff/gnappo@${GNAPPO_VERSION} --run ${SCRIPT_TO_LAUNCH} --cors --mongodb-url mongodb://${GNAPPO_USER}:${GNAPPO_PWD}@${GNAPPO_HOST}:${GNAPPO_PORT}/${GNAPPO_DB_NAME}?authSource=admin

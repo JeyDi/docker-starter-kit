@@ -1,0 +1,12 @@
+version: "2"
+
+services:
+    stream-stocks:
+        build:
+            context: ./consumer
+        volumes:
+            - ./consumer:/usr/src/app/
+        ports:
+            - 8501:8501
+        environment:
+            - FINNHUB_TOKEN=${FINNHUB_TOKEN}

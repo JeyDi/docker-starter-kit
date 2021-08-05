@@ -1,14 +1,15 @@
 version: "3"
 services:
     mongo:
-        image: mongo:latest
+        image: mongo:5.0.1
         container_name: mongo
         environment:
             MONGO_INITDB_DATABASE: test
             MONGO_INITDB_ROOT_USERNAME: root
             MONGO_INITDB_ROOT_PASSWORD: moxoff
         volumes:
-        - ${DEPLOY_DIR:-.}/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+        #use this volume if you want to use the init-mongo.js credentials
+        # - ${DEPLOY_DIR:-.}/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
         - ${DEPLOY_VOLUMES_DIR:-.}/volumes/mongo-volume:/data/db
         ports:
             - "27017:27017"
