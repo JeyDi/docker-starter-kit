@@ -44,7 +44,13 @@ ansible-playbook -i inventory.ini provision-vps.yml -u root --ask-pass
 If you want to test the connection to server after the ansible update: `ssh jeydi@server.pythonbiellagroup.it -p 4292 -i ~/.ssh/jeydit4v`
 
 If you want to launch a specific playbook (for example docker):  
-`ansible-playbook -i inventory.ini provision-vps.yml -u jeydi --key-file "~/.ssh/jeydit4v.pub" --tags "docker"`
+`ansible-playbook -i inventory.ini provision-vps.yml -u jeydi --key-file "~/.ssh/jeydit4v" --tags "docker"`
 
 If you want to launch a specific playbook with specific configuration 
 `ansible-playbook -i inventory.ini -l "personal_setup" provision-vps.yml --tags "docker"`
+
+
+## Considerations
+
+If you have problems with permissions on ssh keys or if you want some help with ssh keys, please refer to this github gist:
+- https://gist.github.com/grenade/6318301

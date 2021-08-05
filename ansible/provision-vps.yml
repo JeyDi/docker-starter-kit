@@ -17,6 +17,7 @@
   roles:
     - {role: 'base', tags: 'base'}
     - {role: 'fail2ban', tags: 'fail2ban'}
+    - {role: 'rclone', tags: 'rclone'}
     - {role: 'journal_dir', tags: 'journal_dir'}
     - {role: 'python', tags: 'python'}
     - {role: 'cran_r', tags: 'cran_r'}
