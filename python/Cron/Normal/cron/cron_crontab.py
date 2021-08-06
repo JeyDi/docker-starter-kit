@@ -1,19 +1,12 @@
-import schedule
-import time
-
 from logger import logger
-from cron.utils.func import test_job
-
+from crontab import CronTab  
 
 if __name__ == "__main__":
 
-    logger.info(" --- Schedule Cron Job Test --- ")
+    logger.info(" --- Configuring the CronTab --- ")
 
-    # Register the job you want to launch
-    # schedule.every(1).minutes.do(launch_operations())
-    schedule.every().day.at("00:30").do(test_job())
-
-    # Launch the scheduler
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+    cron = CronTab(user='username') 
+    task = cron.new(command='python cron/run-crontab.py') 
+    task.minute.every(2)
+    #task.month.during('MAR', 'APR')
+    cron.write()

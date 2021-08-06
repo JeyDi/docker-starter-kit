@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  cron-test:
+    build:
+      dockerfile: ./Dockerfile
+      context: ./
+    restart: always
+    environment:
+      EMAIL: "andrea.guzzo92@gmail.com"
+      DEBUG_MODE: "False"
+      VERBOSITY: "info"
+    # command to remain listening
+    # command: tail -F anything
+    # ports:
+    #   - "8000:8000"

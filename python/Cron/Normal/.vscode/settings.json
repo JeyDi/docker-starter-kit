@@ -1,0 +1,36 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "localdb",
+            "username": "pbgadmin",
+            "database": "padb",
+            "password": "SUPERpswd42.."
+        },
+        {
+            "previewLimit": 50,
+            "server": "herse",
+            "port": 5492,
+            "driver": "PostgreSQL",
+            "name": "Zanichelli-herse",
+            "group": "Moxoff",
+            "database": "propaganda",
+            "username": "root",
+            "password": "moxoff"
+        },
+        {
+            "previewLimit": 50,
+            "server": "deathwind",
+            "port": 5492,
+            "driver": "PostgreSQL",
+            "name": "Zanichelli-deathwind",
+            "group": "Moxoff",
+            "database": "propaganda",
+            "username": "root",
+            "password": "moxoff"
+        }
+    ]
+}
