@@ -6,14 +6,13 @@ This is not only a repository for my docker image but there are a lots of gettin
 
 All my knowledge, libraries and general project are inside this folder.
 
-Fell free to use this repo, but please cite my work.
-
-Let me know if you are using something here :)
+Let me know if you are using something here and it's useful or there are some problems :)
 
 
-## Coming soon:
+## Features
 
-- Documentation of this project
-- Better README
-- Streamlit
-- Airflow
+- Data: all related to database, etl, data system, etc...
+- Python: everything related to python
+- System: all about linux system, tools, procedure, useful scripts, ...
+
+
