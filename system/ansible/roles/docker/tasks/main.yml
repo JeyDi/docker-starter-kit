@@ -38,7 +38,7 @@
   become: yes
 - name: add user to docker group
   user:
-    name: "{{ user_name }}"
+    name: "{{ whoami.stdout }}"
     groups: [docker]
     append: yes
-  become: yes
+  become: no

@@ -1,0 +1,27 @@
+---
+- hosts: pbg_base
+  #connection: local
+  become: true
+  become_method: sudo
+  roles:
+    - { role: holms.fqdn, fqdn: "vserver.local", hostname: "vsever" }
+    - base-tools
+    - ansible-rdp
+    - role: r-setup
+    - role: python-setup
+    - ansible-docker
+    - users
+
+      # # - ansible-kids-users
+      # - containers
+      # - gitrepos
+      # # - ansible-docker-shiny-proxy
+      # # - ansible-srv-folder
+      # # - ansible-shiny-server
+      # - role: shiny-apps
+      #   tags: [ never, update ]
+
+  vars:
+    gitrepos_token: "" #":x-oauth-basic" vanloggit
+  environment:
+    GITHUB_PAT: "" # vanloggit

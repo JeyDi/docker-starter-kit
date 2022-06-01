@@ -1,0 +1,23 @@
+---
+dependencies:
+  - role: ansible-r-linux-dependencies
+    tags:
+  #     - r-setup
+      - ansible-r-linux-dependencies
+  
+  # - role: ansible-r
+  #   tags:
+  #     - r-setup
+  #     - ansible-r
+        
+  - role: ansible-rstudio-server-ng
+    tags:
+      - r-studio
+
+
+
+## See module defaults dir for common 'vars'
+# vars:
+#   r_packages:
+
+

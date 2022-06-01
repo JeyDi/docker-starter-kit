@@ -1,0 +1,51 @@
+---
+- set_fact:
+    r_package_names: "{{ r_packages | map(attribute='name') | list }}"
+  
+# - debug:
+#     msg: "{{ item }}"
+#   with_items: "{{ r_package_names }}"
+
+- name: Ubuntu packages
+  # when: ansible_facts['distribution'] == 'Ubuntu'
+  #rescue:
+  #  - debug:
+  #    msg: 'I caught an error, this module has been tested with Ubuntu 18.04'
+      
+  block:
+      
+    - name: tidyverse dependencies
+      apt:
+        pkg:
+          - libcurl4-openssl-dev
+          - libssl-dev
+          - libxml2-dev
+        state: present
+      when: '"tidyverse" in r_package_names'
+      # when: '{{ in("tidyverse", r_packages ) }}'
+      
+    - name: RMysql dependencies
+      apt:
+        name: libmariadb-client-lgpl-dev
+        state: present
+      when: '"RMySQL" in r_package_names'
+
+    - name: RPostgreSQL dependencies
+      apt:
+        name: libpq-dev
+        state: present
+      when: '"RPostgreSQL" in r_package_names'
+
+    - name: gdtools dependencies
+      apt:
+        name: libcairo2-dev
+        state: present
+      when: '"gdtools" in r_package_names'
+
+    - name: littler dependencies
+      apt:
+        name: libpcre2-dev
+        state: present
+      when: '"littler" in r_package_names'
+
+      

@@ -1,0 +1,32 @@
+---
+- name: Install rdp
+  apt:
+    name: 
+      - xrdp
+      # - xfce4
+      # - ubuntu-mate-desktop
+  
+- name: enable xfce for melloncelli
+  copy:
+    content: 'mate-session'	# or 'xfce-session'
+    dest: "/home/melloncelli/.xsession"
+    owner: melloncelli
+    group: melloncelli
+    mode: 0644
+
+- name: enable xfce for perlato
+  copy:
+    content: 'mate-session'
+    dest: "/home/perlato/.xsession"
+    owner: perlato
+    group: perlato
+    mode: 0644
+  
+- name: enable xfce for guzzo
+  copy:
+    content: 'mate-session'
+    dest: "/home/guzzo/.xsession"
+    owner: guzzo
+    group: guzzo
+    mode: 0644
+

@@ -1,0 +1,7 @@
+---
+
+#################
+#users creation
+################
+- name: users creation
+  import_tasks: users.yaml

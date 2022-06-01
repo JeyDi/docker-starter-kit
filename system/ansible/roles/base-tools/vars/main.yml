@@ -1,0 +1,34 @@
+base_pkgs:
+  - apt-transport-https
+  - unattended-upgrades
+  - git
+  - openssh-server
+  - vim
+  - locate
+  - tree
+  # - texlive
+  # - texlive-extra-utils
+  # - texlive-latex-extra
+  # - texlive-lang-italian
+  # - tex4ht
+  - tmux
+  - htop
+  - cmake
+  - cmake-curses-gui
+  - build-essential
+  - curl
+  - wget
+  - virtualenv
+  - zsh
+  - ufw
+  - htop
+  - tldr
+  - bat
+  - httpie
+  - ncdu
+  - fzf
+  - fd-find
+  - zip
+  - unzip
+  - gcc
+  - gnupg2

@@ -1,0 +1,13 @@
+---
+- name: install basic packages
+  apt:
+    name: "{{ base_pkgs }}"
+    state: present
+    update_cache: yes
+# tasks file for base-tools
+- name: Install CLI tools
+  apt:
+    name: 
+      - tmux
+      - htop
+      - vim

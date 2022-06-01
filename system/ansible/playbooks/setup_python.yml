@@ -1,0 +1,9 @@
+---
+- hosts: pbg_base
+  become: true
+  become_method: sudo
+  # if python is not installed on the host machine
+  gather_facts: false
+  tasks:
+    - name: "install python"
+      raw: "sudo apt-get -y install python"

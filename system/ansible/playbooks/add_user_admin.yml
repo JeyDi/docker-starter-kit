@@ -1,0 +1,41 @@
+---
+- hosts: pbg_root
+  vars:
+    test_var: "prova"
+  vars_prompt:
+    - name: "user_name"
+      prompt: "Enter a name for the new user"
+      private: false
+      confirm: false
+    - name: "user_password"
+      prompt: "Enter a password for the new user"
+      private: true
+      encrypt: "sha512_crypt"
+      confirm: true
+      salt_size: 7
+    # public credential file
+    - name: "credential_file"
+      prompt: "Enter the public key file name for the user (inside the keys folder)"
+      private: false
+      confirm: false
+  tasks:
+    - name: Install latest passlib with pip
+      pip: name=passlib
+    #Add new sudo user
+    - name: Add a new user
+      user:
+        name: "{{user_name}}"
+        shell: /bin/bash
+        password: "{{user_password}}"
+      become: true
+    - name: Add new user to the sudoers
+      copy:
+        dest: '/etc/sudoers.d/"{{user_name}}"'
+        content: '"{{user_name}}" ALL=(ALL)  NOPASSWD: ALL'
+      become: true
+    - name: Copy public key to host
+      authorized_key:
+        user: "{{ user_name }}"
+        state: present
+        key: '{{ lookup("file", "../keys/" + "{{credential_file}}")}}'
+      become: true

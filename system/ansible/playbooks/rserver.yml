@@ -1,0 +1,12 @@
+---
+- hosts: rserver
+  #connection: local
+  become: true
+  become_method: sudo
+  roles:
+    - virtualbox
+
+  vars:
+    gitrepos_token: "" #":x-oauth-basic" vanloggit
+  environment:
+    GITHUB_PAT: "" # vanloggit

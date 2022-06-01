@@ -1,7 +1,0 @@
----
-- hosts: personal_setup 
-
-  become: yes   
-
-  tasks:
-   - ping:

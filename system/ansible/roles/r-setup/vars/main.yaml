@@ -1,0 +1,17 @@
+---
+r_install:
+  - r-recommended
+  # others
+  - remmina
+r_packages:
+  - name: tidyverse
+  - name: shiny
+  - name: rmarkdown
+  - name: devtools
+  - name: RPostgreSQL
+  - name: gdtools
+  - name: littler
+    state: absent
+  # - name: andreamelloncelli/myPackage@DEV
+  #   type: github
+  #   state: absent

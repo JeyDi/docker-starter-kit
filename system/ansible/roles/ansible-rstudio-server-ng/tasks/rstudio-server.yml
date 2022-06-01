@@ -1,0 +1,17 @@
+---
+# tasks file for ansible-rstudio-server-ng
+
+- name: Download RStudio Server
+  get_url:
+    url: https://download2.rstudio.org/server/bionic/amd64/rstudio-server-1.4.1717-amd64.deb
+    dest: /tmp/rstudio-server-1.4.1717-amd64.deb
+    force: no
+
+- name: apt update if old
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600 # Seconds
+
+- name: Install a RStudio DEB Package
+  apt:
+    deb: /tmp/rstudio-server-1.4.1717-amd64.deb

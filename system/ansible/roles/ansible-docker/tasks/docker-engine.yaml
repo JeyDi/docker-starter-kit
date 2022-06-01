@@ -1,0 +1,25 @@
+---
+- name: Install docker.io
+  apt:
+    pkg:
+      - docker.io
+      - docker
+      - docker-compose
+      - python3-pip
+    state: present
+    update_cache: false
+  notify: start docker
+# - name: Enable docker
+#   service: name=docker state=started
+- name: pip docker-py absent
+  pip:
+    name: docker-py
+    state: absent
+- name: pip docker-compose absent
+  pip:
+    name: docker-compose
+    state: absent
+- name: docker group present
+  group:
+    name: docker
+    state: present

@@ -1,0 +1,34 @@
+---
+
+- name: Download CRAN key
+  get_url:
+    url: https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc
+    dest: /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
+    force: no
+
+# are both necessary? Download and add??
+- name: Add CRAN apt key
+  ansible.builtin.apt_key:
+    url: https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc
+    state: present
+
+- name: Add CRAN apt repository
+  ansible.builtin.apt_repository:
+    # repo: "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
+    repo: "deb https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/"
+    state: present
+
+- name: Install r-base
+  apt:
+    name: 
+      - r-base
+
+- name: Install git
+  apt:
+    name: 
+      - git
+
+
+- name: RStudio server
+  import_tasks: rstudio-server.yml
+

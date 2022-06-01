@@ -1,0 +1,25 @@
+---
+# #- src: git@github.com:angrox/ansible-azure-cli
+- src: git@github.com:andreamelloncelli/ansible-r-linux-dependencies.git
+  scm: git
+  version: master
+- src: git@github.com:andreamelloncelli/ansible-r
+  scm: git
+  version: dev
+- src: git@github.com:andreamelloncelli/ansible-rstudio-server-ng
+  scm: git
+  version: main
+- src: git@github.com:andreamelloncelli/ansible-ssh-tfa
+  scm: git
+  version: master
+- src: git@github.com:andreamelloncelli/ansible-docker
+  scm: git
+  version: master
+# - src: git@github.com:andreamelloncelli/ansible-shiny-server
+# #- src: git@github.com:andreamelloncelli/ansible-data-folder.git
+# #- src: git@github.com:andreamelloncelli/ansible-srv-folder
+# #non funziona non è zippato- src: git@github.com:andreamelloncelli/ansible-docker-shiny-proxy
+# # - src: git@github.com:andreamelloncelli/ansible-kids-users
+- src: git@github.com:andreamelloncelli/ansible-akiro.git
+  scm: git
+- holms.fqdn

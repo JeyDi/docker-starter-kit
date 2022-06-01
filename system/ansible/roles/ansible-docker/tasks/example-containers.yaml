@@ -1,0 +1,29 @@
+---
+- name: Test docker install by pulling hello world image
+  docker_image:
+    name: hello-world
+# - name: Create a data container
+#   docker_container:
+#     name: mydata
+#     image: hello-world
+#     state: present
+
+# - name: nginx container
+#   docker:
+#     name: nginx
+#     image: nginx
+#     state: reloaded
+#     ports:
+#     - "::"
+#     cap_drop: all
+#     cap_add:
+#       - setgid
+#       - setuid
+#     pull: always
+#     restart_policy: on-failure
+#     restart_policy_retry: 3
+#     volumes:
+#       - /some/nginx.conf:/etc/nginx/nginx.conf:ro
+#   tags:
+#     - docker_container
+#     - nginx

@@ -1,0 +1,16 @@
+# meta file for r
+---
+galaxy_info:
+  author: Andrea Melloncelli
+  company: freelancer
+  description: docker server module
+  license: MIT
+  min_ansible_version: 2.3.0.0
+  platforms:
+    - name: Ubuntu
+      versions:
+        - xenial
+        - bionic
+  galaxy_tags:
+    - system
+dependencies: []

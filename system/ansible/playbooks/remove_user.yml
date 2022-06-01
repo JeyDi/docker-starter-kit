@@ -1,0 +1,17 @@
+---
+- name: user module demo
+  hosts: pbg_root
+  vars_prompt:
+    - name: "user_name"
+      prompt: "Enter name of the user you want to delete"
+      private: false
+      confirm: false
+  become: true
+  tasks:
+    - name: user example not present
+      ansible.builtin.user:
+        name: "{{user_name}}"
+        shell: /bin/bash
+        state: "absent"
+        remove: true
+      become: true

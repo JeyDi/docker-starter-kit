@@ -1,0 +1,6 @@
+---
+# defaults file for ansible-r-linux-dependencies
+
+################
+# Required variables
+# r_packages: []

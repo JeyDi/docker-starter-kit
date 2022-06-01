@@ -1,0 +1,17 @@
+---
+- name: apt update if old
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600	# Seconds
+
+
+- name: Install a Pip from APT
+  apt:
+    name: python3-pip
+
+- name: Install base python packages
+  pip:
+    name:
+      - pip
+      - virtualenv
+      - poetry

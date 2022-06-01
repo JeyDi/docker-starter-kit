@@ -1,0 +1,27 @@
+---
+- hosts: pbg_root
+  remote_user: root
+
+  become: yes
+
+  vars:
+    test_var: "prova"
+  # vars_prompt:
+  #   - name: "user_name"
+  #     prompt: "Enter a name for the new user"
+  #     private: no
+  #     confirm: no
+  #   - name: "user_password"
+  #     prompt: "Enter a password for the new user"
+  #     private: yes
+  #     encrypt: "sha512_crypt"
+  #     confirm: yes
+  #     salt_size: 7
+  roles:
+    - { role: "base-tools", tags: ["base", "tools"] }
+    - { role: "rclone", tags: ["rclone"] }
+    - { role: "journal_dir", tags: ["journal_dir"] }
+    - { role: "python", tags: ["python"] }
+    - { role: "r-setup", tags: ["r-setup"] }
+    - { role: "nodejs", tags: ["nodejs"] }
+    - { role: "docker", tags: ["docker"] }

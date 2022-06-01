@@ -1,0 +1,53 @@
+---
+- name: Install docker.io
+  apt:
+    pkg:
+      - docker.io
+      - docker
+      - python3-pip
+    state: present
+    update_cache: false
+  notify: start docker
+# - name: Enable docker
+#   service: name=docker state=started
+
+- name: Remove apt docker-compose
+  apt:
+    pkg:
+      - docker-compose
+    state: absent
+
+- name: pip docker-py absent
+  pip:
+    name: docker-py
+    state: absent
+- name: pip docker-compose absent
+  pip:
+    name: docker-compose
+    state: absent
+
+# https://docs.docker.com/compose/install/
+- name: Docker compose from github
+  get_url:
+    # https://github.com/docker/compose/releases/tag/1.29.2
+    # echo "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)"
+    url: "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64"
+    dest: /usr/local/bin/docker-compose
+    mode: '0555'
+    owner: root
+    group: docker
+    # https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64.sha256
+    checksum: sha256:f3f10cf3dbb8107e9ba2ea5f23c1d2159ff7321d16f0a23051d68d8e2547b323
+
+- name: Create a symbolic link to the local docker-compose
+  ansible.builtin.file:
+    src: /usr/local/bin/docker-compose
+    dest: /usr/bin/docker-compose
+    owner: root
+    group: root
+    state: link
+
+- name: docker group present
+  group:
+    name: docker
+    state: present
