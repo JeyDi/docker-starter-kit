@@ -1,0 +1,52 @@
+#WARNING: If this it's not working remove the folder /root/.pyenv or <your_home>/.pyenv
+# sudo rm -rf /root/.pyenv
+- name: download pyenv
+  ansible.builtin.git:
+    repo: "https://github.com/pyenv/pyenv.git"
+    dest: "/home/{{ user_name }}/.pyenv"
+
+# - name: install pyenv with automatic installer
+#   become: False
+#   ansible.builtin.shell: curl https://pyenv.run | bash
+
+- name: add pyenv to profile
+  become: False
+  ansible.builtin.shell: |
+    echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+    echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+    echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+    echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.profile
+    echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.profile
+    echo 'eval "$(pyenv init -)"' >> ~/.profile
+    echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bash_profile
+    echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bash_profile
+    echo 'eval "$(pyenv init -)"' >> ~/.bash_profile
+    echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
+    echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
+    echo 'eval "$(pyenv init -)"' >> ~/.zshrc
+
+- name: install specific python version of pyenv
+  become: False
+  ansible.builtin.shell: |
+    'exec "$SHELL"'
+    'pyenv install 3.8.13'
+    'pyenv global 3.8.13'
+
+# - name: Source bash profile.
+# shell: source $HOME/.profile $HOME/.bash_profile
+
+# - name: install python version with pyenv
+#   ansible.builtin.shell: pyenv install -v 3.8.10
+#   remote_user: "{{user_name}}"
+
+# - name: set python version to global
+#   ansible.builtin.shell: pyenv global 3.8.10
+#   remote_user: "{{user_name}}"
+
+# Install poetry
+# WARNING = probably you have python instead python3 in your machine when you launch the curl command
+- name: install poetry
+  become: False
+  ansible.builtin.shell: wget -O /home/{{user_name}}/install-poetry.py https://install.python-poetry.org/ && cd /home/{{user_name}} && python install-poetry.py --version {{poetry_version}}
+# - name: add poetry to env variables
+#   ansible.builtin.shell: source $HOME/.poetry/env

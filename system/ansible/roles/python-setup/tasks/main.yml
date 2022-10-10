@@ -1,4 +1,0 @@
----
-# tasks file for python-setup
-- name: Python base setup
-  import_tasks: python-base.yml

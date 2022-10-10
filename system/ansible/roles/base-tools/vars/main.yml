@@ -6,13 +6,9 @@ base_pkgs:
   - vim
   - locate
   - tree
-  # - texlive
-  # - texlive-extra-utils
-  # - texlive-latex-extra
-  # - texlive-lang-italian
-  # - tex4ht
   - tmux
   - htop
+  - make
   - cmake
   - cmake-curses-gui
   - build-essential
@@ -32,3 +28,8 @@ base_pkgs:
   - unzip
   - gcc
   - gnupg2
+  # - texlive
+  # - texlive-extra-utils
+  # - texlive-latex-extra
+  # - texlive-lang-italian
+  # - tex4ht

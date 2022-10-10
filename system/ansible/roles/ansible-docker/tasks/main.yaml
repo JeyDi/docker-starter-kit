@@ -3,7 +3,7 @@
 #   include: docker-engine.yaml
 
 - name: Docker engine - latest
-  import_tasks: docker-engine-latest.yaml
+  include: docker-engine-latest.yaml
 
 # - name: Docker containers
 #   include: example-containers.yaml

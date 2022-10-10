@@ -1,7 +1,7 @@
 ---
-- hosts: [pbg]
+- hosts: [pbg, pbg_admin, bluepipe, bluepipe_admin]
 
-  become: false
+  become: true
 
   tasks:
     - ping:

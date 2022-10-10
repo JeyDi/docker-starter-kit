@@ -1,0 +1,76 @@
+- name: install dependencies
+  become: "{{ ansible_distribution != 'MacOSX' }}"
+  package:
+    name: "{{ oh_my_zsh_dependencies }}"
+    state: present
+
+- name: clone oh-my-zsh for users
+  tags:
+    # Suppress warning: [ANSIBLE0006] git used in place of git module
+    # Git module doesn't allow us to set `core.autocrlf=input`.
+    - skip_ansible_lint
+  become: True
+  become_user: "{{ user_name }}"
+  # core.autocrlf=input prevents https://github.com/robbyrussell/oh-my-zsh/issues/4402
+  command: "git clone -c core.autocrlf=input --depth=1 https://github.com/robbyrussell/oh-my-zsh.git .oh-my-zsh"
+  args:
+    chdir: "~{{ user_name }}"
+    creates: "~{{ user_name }}/.oh-my-zsh"
+  with_items: "{{ users }}"
+  when: "((user.oh_my_zsh | default({})).install | default(oh_my_zsh_install)) | bool"
+  loop_control:
+    loop_var: user
+    label: "{{ user_name }}"
+
+- name: set permissions of oh-my-zsh for users
+  become: True
+  file:
+    path: "~{{ user_name }}/.oh-my-zsh"
+    # Prevent the cloned repository from having insecure permissions. Failing to do
+    # so causes compinit() calls to fail with "command not found: compdef" errors
+    # for users with insecure umasks (e.g., "002", allowing group writability).
+    mode: "go-w"
+    recurse: True
+  with_items: "{{ users }}"
+  when: "((user.oh_my_zsh | default({})).install | default(oh_my_zsh_install)) | bool"
+  loop_control:
+    loop_var: user
+    label: "{{ user_name }}"
+
+# Default configuration if you manage your users
+# - name: set default shell for users
+#   become: True
+#   user:
+#     name: "{{ user_name }}"
+#     shell: /bin/zsh
+#   with_items: "{{ users }}"
+#   when: "((user.oh_my_zsh | default({})).install | default(oh_my_zsh_install)) | bool"
+#   loop_control:
+#     loop_var: user
+#     label: "{{ user_name }}"
+
+- name: set default shell for users (for LDAP servers)
+  become: False
+  ansible.builtin.shell: |
+    echo '''
+    # Run zsh
+    if [ "$SHELL" != "/usr/bin/zsh" ] 
+    then 
+      export SHELL="/usr/bin/zsh" 
+      exec /usr/bin/zsh
+    fi
+    ''' >> ~/.profile
+
+- name: write .zshrc for users
+  become: True
+  become_user: "{{ user_name }}"
+  template:
+    src: zshrc.j2
+    dest: "~{{ user_name }}/.zshrc"
+    backup: True
+    mode: "u=rw,go=r"
+  with_items: "{{ users }}"
+  when: "((user.oh_my_zsh | default({})).install | default(oh_my_zsh_install)) | bool"
+  loop_control:
+    loop_var: user
+    label: "{{ user_name }}"

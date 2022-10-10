@@ -29,6 +29,10 @@
       - git
 
 
+
+#################
+#users creation
+################
 - name: RStudio server
-  import_tasks: rstudio-server.yml
+  include: rstudio-server.yml
 

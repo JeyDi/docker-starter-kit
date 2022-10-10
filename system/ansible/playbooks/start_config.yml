@@ -1,0 +1,37 @@
+---
+- hosts: [pbg, pbg_admin, bluepipe, bluepipe_admin]
+  vars_prompt:
+    - name: "user_name"
+      prompt: "Enter the name for the user on the machine you want to use"
+      private: False
+      confirm: False
+  #   - name: "user_password"
+  #     prompt: "Enter a password for the new user"
+  #     private: yes
+  #     encrypt: "sha512_crypt"
+  #     confirm: yes
+  #     salt_size: 7
+
+  remote_user: "{{ user_name }}"
+  become: True
+
+  vars:
+    test_var: "PBG"
+    docker_compose_version: "v2.10.0"
+
+  roles:
+    - { role: roles/base-tools, tags: ["base", "tools", "base-tools"] }
+    - { role: roles/bashtop, tags: ["base", "tools", "bashtop"] }
+    - { role: roles/users, tags: ["users"] }
+    - { role: roles/fail2ban, tags: ["base", "tools", "fail2ban"] }
+    - {
+        role: roles/gitlab-runner,
+        tags: ["base", "tools", "gitlab", "pipeline", "runner"],
+      }
+    - { role: roles/rclone, tags: ["rclone"] }
+    - { role: roles/journal_dir, tags: ["journal_dir"] }
+    - { role: roles/python, tags: ["python"] }
+    # - { role: roles/r-setup, tags: ["r-setup"] }
+    - { role: roles/nodejs, tags: ["nodejs"] }
+    - { role: roles/docker, tags: ["docker"] }
+    - { role: roles/sshd, tags: ["base", "tools", "sshd"] }

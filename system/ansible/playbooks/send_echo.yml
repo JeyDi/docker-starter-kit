@@ -1,5 +1,5 @@
 ---
-- hosts: [pbg]
+- hosts: [pbg, pbg_admin, bluepipe, bluepipe_admin]
 
   become: true
 

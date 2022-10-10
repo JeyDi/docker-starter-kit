@@ -1,0 +1,1 @@
+ansible gpu2 -m ping -i inventory.ini

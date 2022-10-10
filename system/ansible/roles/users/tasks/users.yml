@@ -1,0 +1,156 @@
+---
+################################################################
+# creation of groups with ssh
+- group:
+    name: docker
+    state: present
+
+- group:
+    name: dev
+    state: present
+
+- group:
+    name: pbg
+    state: present
+
+# - name: Force an user to change password
+#   shell: "sudo chage --maxdays 30 --warndays 10 --lastday 0 <username>"
+#   when: <username>.changed
+
+# password generation (launch manually)
+# pwgen -1 8 10 | xargs -I '{}' sh -c 'echo -n {} "  "; openssl passwd -1 {}'
+# echo "password you want to use" | xargs -I '{}' sh -c 'echo -n {} "  "; openssl passwd -1 {}'
+
+################################################################
+## super
+- name: Create super user pbg
+  user:
+    name: pbg
+    comment: "PBG Super User"
+    shell: /bin/zsh
+    # pwgen -1 8 10 | xargs -I '{}' sh -c 'echo -n {} "  "; openssl passwd -1 {}'
+    password: "$1$arBaD1Z.$szb1n0mOUSwboT.N8Y6kT0"
+    update_password: "always" # default: "always", or "on_create"
+    groups: [users, dev, sudo, docker, pbg]
+  register: pbg
+
+- name: Force user to change password
+  shell: "sudo chage --maxdays 30 --warndays 10 --lastday 0 pbg"
+  when: pbg.changed
+
+- name: Set authorized key for pbg super
+  authorized_key:
+    user: pbg
+    key: "{{ item }}"
+    #key_options: 'no-port-forwarding,from="10.0.1.1"'
+    comment: pythonbiellagroup@gmail.com
+  with_file:
+    - "{{ role_path }}/files/pbg/pbg.pub"
+  run_once: True
+
+- name: Set sudo NOPASSWORD for root
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/pbg/pbg"
+    dest: /etc/sudoers.d/pbg
+    validate: /usr/sbin/visudo -csf %s
+    remote_src: no
+    backup: no
+    owner: root
+    group: root
+    mode: "0440"
+
+##### User: airaghi
+- name: Create Airaghi User
+  user:
+    name: airaghi
+    comment: "Davide Airaghi"
+    shell: /bin/bash
+    password: "$1$arBaD1Z.$szb1n0mOUSwboT.N8Y6kT0"
+    update_password: "always"
+    groups: [users, dev, docker, sudo, pbg]
+  register: airaghi
+  run_once: True
+
+- name: Force user to change password
+  shell: "sudo chage --maxdays 30 --warndays 10 --lastday 0 airaghi"
+  when: airaghi.changed
+
+- name: Set authorized key for airaghi
+  authorized_key:
+    user: airaghi
+    key: "{{ item }}"
+  with_file:
+    - "{{ role_path }}/files/airaghi/airaghi.pub"
+  run_once: True
+
+##### User: guzzo
+- name: Create Guzzo user
+  user:
+    name: guzzo
+    comment: "Andrea Guzzo"
+    shell: /bin/zsh
+    password: "$1$arBaD1Z.$szb1n0mOUSwboT.N8Y6kT0"
+    update_password: "always"
+    groups: [users, dev, docker, sudo, pbg]
+  register: guzzo
+  run_once: True
+
+- name: Force user to change password
+  shell: "sudo chage --maxdays 30 --warndays 10 --lastday 0 guzzo"
+  when: guzzo.changed
+
+- name: Set authorized key for guzzo
+  authorized_key:
+    user: guzzo
+    key: "{{ item }}"
+  with_file:
+    - "{{ role_path }}/files/guzzo/guzzo.pub"
+  run_once: True
+
+##### User: jeydi
+- name: Create jeydi user
+  user:
+    name: jeydi
+    comment: "Andrea Guzzo"
+    shell: /bin/zsh
+    password: "$1$arBaD1Z.$szb1n0mOUSwboT.N8Y6kT0"
+    update_password: "always"
+    groups: [users, dev, docker, sudo, pbg]
+  register: jeydi
+  run_once: True
+
+- name: Force user to change password
+  shell: "sudo chage --maxdays 30 --warndays 10 --lastday 0 jeydi"
+  when: jeydi.changed
+
+- name: Set authorized key for jeydi
+  authorized_key:
+    user: jeydi
+    key: "{{ item }}"
+  with_file:
+    - "{{ role_path }}/files/jeydi/jeydi.pub"
+  run_once: True
+
+##### User: nardi
+- name: Create nardi user
+  user:
+    name: nardi
+    comment: "Mario Nardi"
+    shell: /bin/bash
+    password: "$1$arBaD1Z.$szb1n0mOUSwboT.N8Y6kT0"
+    update_password: "always"
+    groups: [users, dev, docker, sudo, pbg]
+  register: nardi
+  run_once: True
+
+- name: Force user to change password
+  shell: "sudo chage --maxdays 30 --warndays 10 --lastday 0 nardi"
+  when: nardi.changed
+
+- name: Set authorized key for nardi
+  authorized_key:
+    user: nardi
+    key: "{{ item }}"
+  with_file:
+    - "{{ role_path }}/files/nardi/nardi.pub"
+  run_once: True

@@ -1,0 +1,20 @@
+# Create a new sudo admin
+---
+- hosts: [pbg, pbg_admin, bluepipe, bluepipe_admin]
+  vars_prompt:
+    - name: "user_name"
+      prompt: "Enter username of the user that you want to update"
+      private: False
+      confirm: False
+  tasks:
+    - name: Deploy SSH Key
+      authorized_key:
+        user="{{user_name}}"
+        key="lookup('file', 'roles/users/files/{{user_name}}/{{user_name}}.pub')"
+        state=present
+        # if you want to use a local pub key (playbooks > keys > authorized)
+        # key="{{ lookup('file', './keys/authorized/' + credential_file )}}"
+      become: True
+# If you want to use a different folder than the role users
+# key="{{ lookup('file', './keys/authorized/' + credential_file )}}"
+# state=present

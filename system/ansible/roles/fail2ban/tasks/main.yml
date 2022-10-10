@@ -5,7 +5,7 @@
   ansible.builtin.package:
     name: fail2ban
     state: present
-  become: yes
+  become: True
 
 - name: configure fail2ban.local
   community.general.ini_file:
@@ -17,7 +17,7 @@
   loop: "{{ fail2ban_base_configuration + fail2ban_configuration }}"
   loop_control:
     label: "{{ item.option }}"
-  become: yes
+  become: True
 
 - name: configure jail.local
   community.general.ini_file:
@@ -29,13 +29,13 @@
   loop: "{{ fail2ban_base_jail_configuration + fail2ban_jail_configuration }}"
   loop_control:
     label: "{{ item.option }}"
-  become: yes
+  become: True
 
 - name: stat auth log file
   ansible.builtin.stat:
     path: /var/log/auth.log
   register: fail2ban_auth
-  become: yes
+  become: True
 
 - name: touch auth log file
   ansible.builtin.file:
@@ -45,11 +45,11 @@
   when:
     - fail2ban_auth.stat.exists is defined
     - not fail2ban_auth.stat.exists
-  become: yes
+  become: True
 
 - name: start and enable fail2ban
   ansible.builtin.service:
     name: "{{ fail2ban_service }}"
     state: started
     enabled: yes
-  become: yes
+  become: True

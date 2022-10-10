@@ -1,0 +1,7 @@
+# Install gitlab runner inside a Ubuntu / Debian machine
+- name: download binaries
+  shell: curl -LJO "https://gitlab-runner-downloads.s3.amazonaws.com/latest/deb/gitlab-runner_amd64.deb"
+
+- name: install binaries
+  shell: dpkg -i gitlab-runner_amd64.deb
+  become: True

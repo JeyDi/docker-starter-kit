@@ -2,8 +2,8 @@
 # tasks file for virtualbox
 
 - name: vb-install
-  import_tasks: vb-install.yml
+  include: vb-install.yml
 
 - name: vb-filesystem
-  import_tasks: vb-filesystem.yml
+  include: vb-filesystem.yml
 

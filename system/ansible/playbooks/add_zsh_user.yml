@@ -1,0 +1,31 @@
+# Add zsh shell to a user
+---
+- hosts: [pbg, pbg_admin, bluepipe, bluepipe_admin]
+  vars_prompt:
+    - name: "user_name"
+      prompt: "Enter the name for the user on the machine you want to use"
+      private: False
+      confirm: False
+  #   - name: "user_password"
+  #     prompt: "Enter a password for the new user"
+  #     private: yes
+  #     encrypt: "sha512_crypt"
+  #     confirm: yes
+  #     salt_size: 7
+
+  remote_user: "{{ user_name }}"
+  become: True
+
+  vars:
+    test_var: "PBG"
+
+  roles:
+    - role: roles/zsh
+      tags: ["base", "tools", "zsh"]
+      oh_my_zsh_theme: robbyrussell
+      oh_my_zsh_plugins:
+        - git
+        - docker
+        - python
+      users:
+        - username: "{{ user_name }}"

@@ -2,7 +2,7 @@
 # Install python
 - name: Install Python base
   ansible.builtin.shell: apt -y update && apt install -y python3.8 && apt install -y python3-pip
-  become: yes
+  become: True
 
 # Install pyenv
 - name: install pyenv requirements
@@ -27,35 +27,4 @@
       - python-openssl
       - python-is-python3
     state: present
-  become: yes
-
-#WARNING: If this it's not working remove the folder /root/.pyenv or <your_home>/.pyenv
-# sudo rm -rf /root/.pyenv
-- name: install pyenv
-  become: no
-  ansible.builtin.shell: curl https://pyenv.run | bash
-
-- name: add pyenv to profile
-  become: no
-  ansible.builtin.shell: |
-    echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.profile
-    echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.profile
-
-# - name: Source bash profile.
-# shell: source $HOME/.profile $HOME/.bash_profile
-
-# - name: install python version with pyenv
-#   ansible.builtin.shell: pyenv install -v 3.8.10
-#   remote_user: "{{user_name}}"
-
-# - name: set python version to global
-#   ansible.builtin.shell: pyenv global 3.8.10
-#   remote_user: "{{user_name}}"
-
-# Install poetry
-# WARNING = probably you have python instead python3 in your machine when you launch the curl command
-- name: install poetry
-  become: no
-  ansible.builtin.shell: curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
-# - name: add poetry to env variables
-#   ansible.builtin.shell: source $HOME/.poetry/env
+  become: True

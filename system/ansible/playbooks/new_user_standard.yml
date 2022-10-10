@@ -1,0 +1,34 @@
+# Create a new normal user (not sudo)
+---
+- hosts: [pbg, pbg_admin, bluepipe, bluepipe_admin]
+  vars:
+    test_var: "prova"
+  vars_prompt:
+    - name: "user_name"
+      prompt: "Enter a name for the new user"
+      private: False
+      confirm: False
+    - name: "user_password"
+      prompt: "Enter a password for the new user"
+      private: True
+      encrypt: "sha512_crypt"
+      confirm: True
+      salt_size: 7
+    - name: "credential_file"
+      prompt: "Enter the credential file name for the user"
+      private: True
+      confirm: False
+  tasks:
+    # Add new user user
+    - name: Add a new user
+      user:
+        name: "{{user_name}}"
+        shell: /bin/zsh
+        password: "{{user_password}}"
+      become: True
+
+    - name: Deploy SSH Key
+      authorized_key: user="{{user_name}}"
+        key="{{ lookup('file', './keys/authorized/' + credential_file )}}"
+        state=present
+      become: True
