@@ -1,7 +1,7 @@
 ---
 # Install python
-- name: Install Python base
-  ansible.builtin.shell: apt -y update && apt install -y python3.8 && apt install -y python3-pip
+- name: Install Python base 3
+  ansible.builtin.shell: apt -y update && apt install -y python3 && apt install -y python3-pip
   become: True
 
 # Install pyenv
@@ -24,7 +24,7 @@
       - tk-dev
       - libffi-dev
       - liblzma-dev
-      - python-openssl
-      - python-is-python3
+      # - python-openssl
+      # - python-is-python3
     state: present
   become: True

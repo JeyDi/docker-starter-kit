@@ -32,6 +32,6 @@
     - { role: roles/journal_dir, tags: ["journal_dir"] }
     - { role: roles/python, tags: ["python"] }
     # - { role: roles/r-setup, tags: ["r-setup"] }
-    - { role: roles/nodejs, tags: ["nodejs"] }
+    # - { role: roles/nodejs, tags: ["nodejs"] }
     - { role: roles/docker, tags: ["docker"] }
     - { role: roles/sshd, tags: ["base", "tools", "sshd"] }
