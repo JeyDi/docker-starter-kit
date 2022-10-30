@@ -59,6 +59,30 @@
     group: root
     mode: "0440"
 
+##### User: jeydi
+- name: Create jeydi user
+  user:
+    name: jeydi
+    comment: "Andrea Guzzo"
+    shell: /bin/zsh
+    password: "$1$arBaD1Z.$szb1n0mOUSwboT.N8Y6kT0"
+    update_password: "always"
+    groups: [users, dev, docker, sudo, pbg]
+  register: jeydi
+  run_once: True
+
+- name: Force user to change password
+  shell: "sudo chage --maxdays 30 --warndays 10 --lastday 0 jeydi"
+  when: jeydi.changed
+
+- name: Set authorized key for jeydi
+  authorized_key:
+    user: jeydi
+    key: "{{ item }}"
+  with_file:
+    - "{{ role_path }}/files/jeydi/jeydi.pub"
+  run_once: True
+
 - name: Set sudo NOPASSWORD for jeydi
   ansible.builtin.copy:
     src: "{{ role_path }}/files/jeydi/jeydi"
@@ -69,6 +93,7 @@
     owner: root
     group: root
     mode: "0440"
+
 # ##### User: airaghi
 # - name: Create Airaghi User
 #   user:
@@ -115,30 +140,6 @@
 #     key: "{{ item }}"
 #   with_file:
 #     - "{{ role_path }}/files/guzzo/guzzo.pub"
-#   run_once: True
-
-# ##### User: jeydi
-# - name: Create jeydi user
-#   user:
-#     name: jeydi
-#     comment: "Andrea Guzzo"
-#     shell: /bin/zsh
-#     password: "$1$arBaD1Z.$szb1n0mOUSwboT.N8Y6kT0"
-#     update_password: "always"
-#     groups: [users, dev, docker, sudo, pbg]
-#   register: jeydi
-#   run_once: True
-
-# - name: Force user to change password
-#   shell: "sudo chage --maxdays 30 --warndays 10 --lastday 0 jeydi"
-#   when: jeydi.changed
-
-# - name: Set authorized key for jeydi
-#   authorized_key:
-#     user: jeydi
-#     key: "{{ item }}"
-#   with_file:
-#     - "{{ role_path }}/files/jeydi/jeydi.pub"
 #   run_once: True
 
 # ##### User: nardi
