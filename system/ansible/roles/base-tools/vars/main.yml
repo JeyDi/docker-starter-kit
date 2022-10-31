@@ -28,6 +28,8 @@ base_pkgs:
   - unzip
   - gcc
   - gnupg2
+  - cockpit
+  - certbot
   # - texlive
   # - texlive-extra-utils
   # - texlive-latex-extra
